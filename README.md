@@ -17,7 +17,7 @@ https://api-3.glitch.me/new/https://www.google.com
 https://api-3.glitch.me/new/http://foo.com:80
 ```
 
-## Example creation output
+## Example creation output:
 ```js
 { "original_url":"http://foo.com:80", "short_url":"https://api-3.glitch.me/8170" }
 ```
