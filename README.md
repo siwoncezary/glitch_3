@@ -1,7 +1,9 @@
 # URL Shortener Microservice
 ## FreeCodeCamp API Projects
-=========================
-Powered by Glitch and GitHub
+
+-------------------------
+
+Powered by [Github](https://github.com/siwoncezary/glitch_3) | [FreeCodeCamp](http://www.freecodecamp.com/siwoncezary) | [CodePen](http://codepen.io/siwoncezary/) 
 
 -------------------------
 User stories:
