@@ -27,7 +27,13 @@ app.get("/new/*", function(req, response){
   mongo.connect(baseUrl, function(err, db){
     if (err) {
       response.send("Failed connection to database!");
+      return;
     }
+    db.createCollection(colName, {
+      capped: true,
+      size: 5242880,
+      max: 5000
+    });
     getNextSequence(db, ourl, response, insertUrl);
   });
 });

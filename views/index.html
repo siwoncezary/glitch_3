@@ -19,8 +19,43 @@
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
-    <h1>
-      URL shortener: Freecodecamp API project
-    </h1>
+    <h2>
+      URL Shortener Microservice: Freecodecamp API project
+    </h2>
+    <h3>
+      User stories:  
+    </h3>
+    <ul>
+      <li>
+        I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.
+      </li>
+      <li>
+        When I visit that shortened URL, it will redirect me to my original link.
+      </li>
+    </ul>
+    <h3>
+      Example creating short url:<br>
+      <code>
+        http://api-33.glitch.me/new/http://www.google.com
+      </code>
+    </h3>
+    <h3>
+      Response:<br>
+      <code>
+        {"original_url":"http://www.google.pl","short_url":"https://api-33.glitch.me/8"}
+      </code>
+    </h3>
+    <h3>
+      Example using short url:<br>
+      <code>
+        https://api-33.glitch.me/8
+      </code>
+    </h3>
+    <h3>
+      You should be redirected to:<br>
+      <code>
+      http://www.google.com
+      </code>
+    </h3>
   </body>
 </html>
