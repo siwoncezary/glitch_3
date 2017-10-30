@@ -6,12 +6,9 @@ var express = require('express');
 var app = express();
 var mongo = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
-var history = [];
-//var baseUrl = 'mongodb://stampuser:monika68@ds227325.mlab.com:27325/stamp-base';
 var baseUrl = process.env.BASE_URI;
 var colName = 'short_urls';
-var newUrl = 'https://api-3.glitch.me/';
-var last;
+var newUrl = process.env.APP_URL;
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -27,7 +24,6 @@ app.get("/", function (request, response) {
 //
 app.get("/new/*", function(req, response){
   var ourl = req.path.replace("/new/","");
-
   mongo.connect(baseUrl, function(err, db){
     if (err) {
       response.send("Failed connection to database!");
@@ -64,7 +60,13 @@ var listener = app.listen(process.env.PORT, function () {
 });
 
 function getNextSequence(db, original_url, response, callback){
-    db.collection("counters").findAndModify(
+    if (!isValidUrl(original_url)){
+        response.send("No valid url, cant make shortcut!!!");
+        return;
+    }
+    db.collection(colName).find({"original_url": original_url}).toArray(function(err, data){
+      if (data.length === 0){
+          db.collection("counters").findAndModify(
             {name: "site_counter"},
             [],
             {$inc: { count: 1 }}, 
@@ -75,21 +77,23 @@ function getNextSequence(db, original_url, response, callback){
                 return;
               }
               callback(db, original_url, ""+data.value.count, response);
-            });
+          });
+      } else {
+        response.send({"original_url": data[0].original_url, "short_url": newUrl + data[0].short_url});  
+      }
+    });
+    
 }
 
 function insertUrl(db, original_url, short_url, response){
-  if (!isValidUrl(original_url)){
-      response.send("No valid url, cant make shortcut!!!");
-      return;
-  }
   var item = {"original_url": original_url, "short_url": short_url};
   db.collection(colName).save(item, function(err, element){
         if (err){
           console.log(err);
           return;
         }
-        response.send({'original_url':element.original_url, 'short_url': element.short_url});
+        console.log(element.ops);
+        response.send({'original_url':element.ops[0].original_url, 'short_url': newUrl+element.ops[0].short_url});
         db.close();
   });
 }
