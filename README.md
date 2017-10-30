@@ -3,7 +3,7 @@
 
 -------------------------
 
-Powered by [Github](https://github.com/siwoncezary/glitch_3) | [FreeCodeCamp](http://www.freecodecamp.com/siwoncezary) | [CodePen](http://codepen.io/siwoncezary/) 
+Powered by [Github](https://github.com/siwoncezary/glitch_3) | [FreeCodeCamp](http://www.freecodecamp.com/siwoncezary) | [Glitch](https://api-3.glitch.me/) 
 
 -------------------------
 User stories:
@@ -13,19 +13,19 @@ User stories:
 ## Example creation usage:
 
 ```js
-https://<adress>/new/https://www.google.com
-https://<adress>/new/http://foo.com:80
+https://api-3.glitch.me/new/https://www.google.com
+https://api-3.glitch.me/new/http://foo.com:80
 ```
 
 ## Example creation output
 ```js
-{ "original_url":"http://foo.com:80", "short_url":"https://<adress>/8170" }
+{ "original_url":"http://foo.com:80", "short_url":"https://api-3.glitch.me/8170" }
 ```
 
 ## Usage:
 
 ```js
-https://<adress>/2871
+https://api-3.glitch.me/2871
 ```
 
 ## Will redirect to:
