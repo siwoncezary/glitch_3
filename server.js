@@ -7,7 +7,8 @@ var app = express();
 var mongo = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var history = [];
-var baseUrl = 'mongodb://stampuser:monika68@ds227325.mlab.com:27325/stamp-base';
+//var baseUrl = 'mongodb://stampuser:monika68@ds227325.mlab.com:27325/stamp-base';
+var baseUrl = process.env.BASE_URI;
 var colName = 'short_urls';
 var newUrl = 'https://api-3.glitch.me/';
 var last;
@@ -23,9 +24,10 @@ app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
 
-
+//
 app.get("/new/*", function(req, response){
   var ourl = req.path.replace("/new/","");
+
   mongo.connect(baseUrl, function(err, db){
     if (err) {
       response.send("Failed connection to database!");
@@ -50,6 +52,7 @@ app.get("/:shorturl", function(req,res){
        else {
          console.log(data);
          res.redirect(data[0].original_url);
+         db.close();
        }
        });
     });
@@ -71,8 +74,7 @@ function getNextSequence(db, original_url, response, callback){
                 console.log("ERROR SEQUENCE = "+err);
                 return;
               }
-              var short_url = data.value.count;
-                callback(db, original_url, ""+short_url, response);
+              callback(db, original_url, ""+data.value.count, response);
             });
 }
 
@@ -83,8 +85,10 @@ function insertUrl(db, original_url, short_url, response){
   }
   var item = {"original_url": original_url, "short_url": short_url};
   db.collection(colName).save(item, function(err, element){
-        if (err) 
-          console.log(err);      
+        if (err){
+          console.log(err);
+          return;
+        }
         response.send({'original_url':element.original_url, 'short_url': element.short_url});
         db.close();
   });
