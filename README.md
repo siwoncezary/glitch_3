@@ -1,27 +1,40 @@
-Welcome to the Glitch BETA
-=========================
+# URL Shortener Microservice
+## FreeCodeCamp API Projects
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
+-------------------------
 
-**Glitch** is the friendly commmunity where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
+Powered by [Github](https://github.com/siwoncezary/glitch_3) | [FreeCodeCamp](http://www.freecodecamp.com/siwoncezary) | [Glitch](https://api-3.glitch.me/) 
 
-Find out more [about Glitch](https://glitch.com/about).
+-------------------------
+User stories:
+- I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.
+- When I visit that shortened URL, it will redirect me to my original link.
 
+## Example creation usage:
 
-Your Project
-------------
+```js
+https://api-3.glitch.me/new/https://www.google.com
+https://api-3.glitch.me/new/http://foo.com:80
+```
 
-On the front-end,
-- edit `public/client.js`, `public/style.css` and `views/index.html`
-- drag in `assets`, like images or music, to add them to your project
+## Example creation output:
+```js
+{ "original_url":"http://foo.com:80", "short_url":"https://api-3.glitch.me/8170" }
+```
 
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
+## Usage:
 
+```js
+https://api-3.glitch.me/2871
+```
 
-Made by [Fog Creek](https://fogcreek.com/)
+## Will redirect to:
+
+```js
+https://www.google.com/
+```
+
+------------------
+Made by Cezary Siwoń
 -------------------
-
-\ ゜o゜)ノ
+(ee$

@@ -3,26 +3,32 @@
   "//2": "https://docs.npmjs.com/files/package.json",
   "//3": "updating this file will download and update your packages",
 
-  "name": "my-glitch-app",
+  "name": "api-3",
   "version": "0.0.1",
-  "description": "What am I about?",
+  "description": "Pass a URL as a parameter and receive a shortened URL in the JSON response.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "mongodb": "^2.1.4"
   },
   "engines": {
     "node": "8.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/welcome-project"
+    "type": "git",
+    "url":   "git+https://github.com/siwoncezary/glitch_3"
   },
   "license": "MIT",
   "keywords": [
     "node",
     "glitch",
-    "express"
-  ]
+    "express",
+    "url shortener",
+    "freecodecamp"
+  ],
+  "author": "Cezary Siwoń",
+  "homepage": "https://github.com/siwoncezary/glitch-3#readme"
 }
