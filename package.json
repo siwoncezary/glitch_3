@@ -3,7 +3,7 @@
   "//2": "https://docs.npmjs.com/files/package.json",
   "//3": "updating this file will download and update your packages",
 
-  "name": "api-3",
+  "name": "glitch-3",
   "version": "0.0.1",
   "description": "Pass a URL as a parameter and receive a shortened URL in the JSON response.",
   "main": "server.js",
