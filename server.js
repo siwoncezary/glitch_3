@@ -6,12 +6,9 @@ var express = require('express');
 var app = express();
 var mongo = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
-var history = [];
-//var baseUrl = 'mongodb://stampuser:monika68@ds227325.mlab.com:27325/stamp-base';
 var baseUrl = process.env.BASE_URI;
 var colName = 'short_urls';
-var newUrl = 'https://api-3.glitch.me/';
-var last;
+var newUrl = process.env.APP_URL;
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -24,15 +21,27 @@ app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
 
-//
+
 app.get("/new/*", function(req, response){
   var ourl = req.path.replace("/new/","");
-
   mongo.connect(baseUrl, function(err, db){
     if (err) {
       response.send("Failed connection to database!");
+      return;
     }
-    getNextSequence(db, ourl, response, insertUrl);
+    //we creating collection for shorter url
+    //base needs an another collection named 'counters' and one document {name:"site_counter", count:<initial_value>}, so you must create this doc manually
+    db.createCollection(colName, {
+      capped: true,
+      size: 5242880,
+      max: 5000
+    });
+    db.createCollection('counters', {
+      capped: true,
+      size: 5242880,
+      max: 50
+    });
+    getNextShortcutForUrl(db, ourl, response, insertUrl);
   });
 });
   
@@ -63,8 +72,17 @@ var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
 
-function getNextSequence(db, original_url, response, callback){
-    db.collection("counters").findAndModify(
+//function creates a next shortcut for url and after it calls user function inserting a original and shor url to databse
+function getNextShortcutForUrl(db, original_url, response, callback){
+    if (!isValidUrl(original_url)){
+        response.send("No valid url, cant make shortcut!!!");
+        return;
+    }
+    db.collection(colName).find({"original_url": original_url}).toArray(function(err, data){
+      //no urls found
+      if (data.length === 0){
+          //get next number from sequence
+          db.collection("counters").findAndModify(
             {name: "site_counter"},
             [],
             {$inc: { count: 1 }}, 
@@ -74,22 +92,26 @@ function getNextSequence(db, original_url, response, callback){
                 console.log("ERROR SEQUENCE = "+err);
                 return;
               }
+              //so we can call function in which we can use number from sequence as a shorter url
               callback(db, original_url, ""+data.value.count, response);
-            });
+          });
+      } else {
+        //there is only one url which has a shortcut, so we can get it from base and send as JSON
+        response.send({"original_url": data[0].original_url, "short_url": newUrl + data[0].short_url});  
+      }
+    });
+    
 }
 
+//function iserts a one document with original and short url
 function insertUrl(db, original_url, short_url, response){
-  if (!isValidUrl(original_url)){
-      response.send("No valid url, cant make shortcut!!!");
-      return;
-  }
   var item = {"original_url": original_url, "short_url": short_url};
   db.collection(colName).save(item, function(err, element){
         if (err){
           console.log(err);
           return;
         }
-        response.send({'original_url':element.original_url, 'short_url': element.short_url});
+        response.send({'original_url':element.ops[0].original_url, 'short_url': newUrl+element.ops[0].short_url});
         db.close();
   });
 }

@@ -1,9 +1,9 @@
 # URL Shortener Microservice
-## FreeCodeCamp API Projects
+## Part 3 of Free Code Camp Backend Challenges
 
 -------------------------
 
-Powered by [Github](https://github.com/siwoncezary/glitch_3) | [FreeCodeCamp](http://www.freecodecamp.com/siwoncezary) | [Glitch](https://api-3.glitch.me/) 
+Powered by [Github](https://github.com/siwoncezary/glitch_3) | [FreeCodeCamp](http://www.freecodecamp.com/siwoncezary) | [Glitch](https://glitch-3.glitch.me/) 
 
 -------------------------
 User stories:
@@ -13,19 +13,19 @@ User stories:
 ## Example creation usage:
 
 ```js
-https://api-3.glitch.me/new/https://www.google.com
-https://api-3.glitch.me/new/http://foo.com:80
+https://glitch-3.glitch.me/new/https://www.google.com
+https://glitch-3.glitch.me/new/http://foo.com:80
 ```
 
 ## Example creation output:
 ```js
-{ "original_url":"http://foo.com:80", "short_url":"https://api-3.glitch.me/8170" }
+{ "original_url":"http://foo.com:80", "short_url":"https://glitch-3.glitch.me/8170" }
 ```
 
 ## Usage:
 
 ```js
-https://api-3.glitch.me/2871
+https://glitch-3.glitch.me/2871
 ```
 
 ## Will redirect to:
@@ -34,7 +34,7 @@ https://api-3.glitch.me/2871
 https://www.google.com/
 ```
 
-------------------
-Made by Cezary Siwoń
--------------------
-(ee$
+Try this at [Glitch](https://glitch-3.glitch.me/)
+
+
+Made by (ee$
